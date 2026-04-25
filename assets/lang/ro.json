@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "IST Auto — Parc auto Cluj-Napoca, mașini rulate verificate",
+    "description": "IST Auto, parc auto în Cluj-Napoca. 12 luni garanție fără limită de km, rate doar cu buletinul, numere provizorii, livrare în toată țara.",
+    "og_title": "IST Auto — Parc auto Cluj-Napoca"
+  },
+  "nav": {
+    "skip": "Sari la conținut",
+    "about": "Despre",
+    "services": "Servicii",
+    "listings": "Mașini",
+    "contact": "Contact",
+    "menu_label": "Deschide meniul",
+    "lang_label": "Schimbă limba"
+  },
+  "hero": {
+    "eyebrow": "Parc auto · Cluj-Napoca",
+    "title": "IST Auto",
+    "tagline": "12 luni garanție fără limită de km",
+    "lede": "Rate doar cu buletinul. Numere provizorii incluse. Livrăm oriunde în țară.",
+    "cta_whatsapp": "Scrie-ne pe WhatsApp",
+    "cta_listings": "Vezi mașinile"
+  },
+  "about": {
+    "heading": "Despre IST Auto",
+    "p1": "IST Auto este un parc auto din Cluj-Napoca specializat în mașini rulate verificate. Oferim garanție 12 luni fără limită de kilometri, rate doar cu buletinul și livrare oriunde în țară.",
+    "p2": "Fiecare mașină este verificată tehnic înainte de a ajunge la tine. Fără surprize, fără clauze ascunse — o experiență directă, bazată pe încredere."
+  },
+  "services": {
+    "heading": "Servicii",
+    "sales": {
+      "title": "Vânzare mașini rulate",
+      "desc": "Stoc actualizat cu mașini verificate tehnic, pregătite pentru drum."
+    },
+    "warranty": {
+      "title": "Garanție 12 luni, fără limită de km",
+      "desc": "Orice mașină cumpărată de la noi vine cu 12 luni garanție, fără limită de kilometri."
+    },
+    "installments": {
+      "title": "Rate doar cu buletinul",
+      "desc": "Finanțare rapidă doar cu cartea de identitate, fără adeverință de venit."
+    },
+    "plates": {
+      "title": "Numere provizorii",
+      "desc": "Ne ocupăm de numerele provizorii ca să pleci cu mașina direct din parc."
+    },
+    "delivery": {
+      "title": "Livrare în toată țara",
+      "desc": "Transport la domiciliu oriunde în România — primești mașina acasă."
+    }
+  },
+  "listings": {
+    "heading": "Mașini disponibile",
+    "disclaimer": "Inventarul este actualizat pe OLX.",
+    "noscript": "Activează JavaScript sau vizitează anunțurile noastre pe OLX.",
+    "fallback": {
+      "heading": "Vezi toate mașinile pe OLX",
+      "lede": "Anunțurile active sunt pe OLX. Deschide lista completă într-un tab nou.",
+      "cta": "Deschide pe OLX"
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "address_label": "Adresă",
+    "phone_label": "Telefon",
+    "email_label": "Email",
+    "hours_label": "Program",
+    "hours_value": "Luni–Sâmbătă: 09:00–18:00 · Duminică: 10:00–17:00",
+    "cta_whatsapp": "WhatsApp",
+    "cta_facebook": "Facebook",
+    "cta_instagram": "Instagram",
+    "cta_olx": "OLX"
+  },
+  "footer": {
+    "copyright": "© IST Auto",
+    "inventory_note": "Informațiile despre mașini sunt gestionate pe OLX."
+  },
+  "whatsapp": {
+    "prefilled_message": "Bună, am văzut site-ul IST Auto și vreau mai multe detalii despre mașini."
+  }
+}

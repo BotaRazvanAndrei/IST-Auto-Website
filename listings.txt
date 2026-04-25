@@ -1,0 +1,7 @@
+# IST Auto — list of OLX listings to show on the website
+# One URL per line. Lines starting with # are ignored.
+# After editing this file, run:  python3 add-listings.py
+#
+# Examples (delete the # and replace with your real listing URLs):
+https://www.olx.ro/d/oferta/audi-a6-s-line-2013-2-0diesel-177cp-manual-rar-efectuat-garantie-12-luni-motor-cutie-numere-provizorii-transport-la-domiciliu-gratuit-IDkuphk.html?reason=seller_listing
+https://www.olx.ro/d/oferta/suzuki-grand-vitara-4x4-lock-2014-1-9diesel-euro-5-12luni-garantie-revizie-ulei-filtre-gratuita-transport-la-domiciliu-numere-IDkwtSV.html?reason=seller_listing

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="glow" cx="85%" cy="15%" r="70%">
+      <stop offset="0%" stop-color="#E53935" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#E53935" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0F1419"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g transform="translate(90, 240)">
+    <text x="0" y="0" font-family="Poppins, Helvetica, Arial, sans-serif" font-weight="700" font-size="140" fill="#FFFFFF" letter-spacing="-4">IST</text>
+    <text x="270" y="0" font-family="Poppins, Helvetica, Arial, sans-serif" font-weight="400" font-style="italic" font-size="112" fill="#E53935">auto</text>
+  </g>
+
+  <rect x="90" y="300" width="110" height="6" fill="#E53935"/>
+
+  <text x="90" y="370" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="600" font-size="44" fill="#FFFFFF">12 luni garanție fără limită de km</text>
+  <text x="90" y="420" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="400" font-size="28" fill="#C8CED6">Parc auto · Cluj-Napoca · Rate doar cu buletinul · Livrare în toată țara</text>
+
+  <text x="90" y="560" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="500" font-size="24" fill="#C8CED6">istautobavaria.ro</text>
+</svg>

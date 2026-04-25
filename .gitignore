@@ -1,0 +1,51 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.history/
+
+# Python (used by add-listings.py)
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# Logs / temp
+*.log
+*.tmp
+*.bak
+*.orig
+
+# Secrets — never commit credentials of any kind
+.env
+.env.*
+!.env.example
+secrets.json
+credentials.json
+
+# Local server artefacts
+/tmp/
+
+# Node (if a build step is ever added)
+node_modules/
+npm-debug.log
+yarn-error.log

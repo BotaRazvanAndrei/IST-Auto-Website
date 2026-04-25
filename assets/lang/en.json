@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "title": "IST Auto — Used cars in Cluj-Napoca, 12-month warranty",
+    "description": "IST Auto, a used-car dealership in Cluj-Napoca, Romania. 12-month warranty with no km limit, ID-only financing, temporary plates, nationwide delivery.",
+    "og_title": "IST Auto — Used cars in Cluj-Napoca"
+  },
+  "nav": {
+    "skip": "Skip to content",
+    "about": "About",
+    "services": "Services",
+    "listings": "Cars",
+    "contact": "Contact",
+    "menu_label": "Open menu",
+    "lang_label": "Change language"
+  },
+  "hero": {
+    "eyebrow": "Used-car dealership · Cluj-Napoca",
+    "title": "IST Auto",
+    "tagline": "12-month warranty, no km limit",
+    "lede": "ID-only financing. Temporary plates included. We deliver anywhere in Romania.",
+    "cta_whatsapp": "Text us on WhatsApp",
+    "cta_listings": "See our cars"
+  },
+  "about": {
+    "heading": "About IST Auto",
+    "p1": "IST Auto is a used-car dealership in Cluj-Napoca, Romania. Every car comes with a 12-month warranty with no km limit, ID-only financing, and nationwide delivery.",
+    "p2": "Each car is inspected before it reaches you. No surprises, no hidden clauses — a straightforward experience built on trust."
+  },
+  "services": {
+    "heading": "Services",
+    "sales": {
+      "title": "Used-car sales",
+      "desc": "A rotating stock of inspected, road-ready cars."
+    },
+    "warranty": {
+      "title": "12-month warranty, no km limit",
+      "desc": "Every car we sell comes with a 12-month warranty — no mileage cap."
+    },
+    "installments": {
+      "title": "ID-only financing",
+      "desc": "Fast financing with just your ID. No proof of income needed."
+    },
+    "plates": {
+      "title": "Temporary plates",
+      "desc": "We handle the temporary registration so you can drive off the lot."
+    },
+    "delivery": {
+      "title": "Nationwide delivery",
+      "desc": "We deliver anywhere in Romania — the car comes to your door."
+    }
+  },
+  "listings": {
+    "heading": "Available cars",
+    "disclaimer": "Inventory is maintained on OLX.",
+    "noscript": "Enable JavaScript or visit our listings on OLX.",
+    "fallback": {
+      "heading": "See all our cars on OLX",
+      "lede": "Active listings live on OLX. Open the full list in a new tab.",
+      "cta": "Open on OLX"
+    }
+  },
+  "contact": {
+    "heading": "Contact",
+    "address_label": "Address",
+    "phone_label": "Phone",
+    "email_label": "Email",
+    "hours_label": "Hours",
+    "hours_value": "Mon–Sat: 09:00–18:00 · Sun: 10:00–17:00",
+    "cta_whatsapp": "WhatsApp",
+    "cta_facebook": "Facebook",
+    "cta_instagram": "Instagram",
+    "cta_olx": "OLX"
+  },
+  "footer": {
+    "copyright": "© IST Auto",
+    "inventory_note": "Car inventory is maintained on OLX."
+  },
+  "whatsapp": {
+    "prefilled_message": "Hi, I found IST Auto's site and I'd like more info about your cars."
+  }
+}
