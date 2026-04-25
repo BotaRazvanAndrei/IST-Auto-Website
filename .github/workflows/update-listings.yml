@@ -1,0 +1,53 @@
+name: Update listings
+
+# Runs add-listings.py on a daily schedule, on edits to listings.txt or the
+# script itself, and on manual dispatch from the Actions tab. Any changes to
+# assets/data/listings.json or assets/img/listings/ are committed back to main
+# so GitHub Pages re-deploys with the fresh data.
+
+on:
+  schedule:
+    # Daily at 04:17 UTC (~07:17 Bucharest in summer / 06:17 in winter).
+    # Off-the-hour to avoid GitHub's hourly cron congestion.
+    - cron: "17 4 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "listings.txt"
+      - "add-listings.py"
+      - ".github/workflows/update-listings.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-listings
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run add-listings.py
+        run: python3 add-listings.py
+
+      - name: Commit changes (if any)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/listings.json assets/img/listings
+          if git diff --cached --quiet; then
+            echo "No listing changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(listings): auto-refresh from OLX [skip ci]"
+          git push
