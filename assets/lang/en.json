@@ -53,6 +53,8 @@
     "heading": "Available cars",
     "disclaimer": "Inventory is maintained on OLX.",
     "noscript": "Enable JavaScript or visit our listings on OLX.",
+    "show_more": "Show more",
+    "show_less": "Show less",
     "fallback": {
       "heading": "See all our cars on OLX",
       "lede": "Active listings live on OLX. Open the full list in a new tab.",

@@ -399,10 +399,15 @@ a { color: inherit; }
   text-transform: lowercase;
 }
 
+.listing-card--hidden { display: none; }
+.listings-grid--expanded .listing-card--hidden { display: flex; }
+
 .listings-more {
   margin: 1.75rem 0 0;
   text-align: center;
 }
+
+.listings-toggle { cursor: pointer; }
 
 .listings-fallback {
   padding: 2.5rem 1.5rem;
