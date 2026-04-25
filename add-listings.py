@@ -31,10 +31,31 @@ LISTINGS_TXT = ROOT / "listings.txt"
 JSON_OUT = ROOT / "assets" / "data" / "listings.json"
 IMG_DIR = ROOT / "assets" / "img" / "listings"
 
+# IST Auto's OLX seller page. The script scrapes this page on every run to
+# discover all currently-active listings — owner does nothing, just keeps
+# posting cars on OLX as before.
+SELLER_URL = "https://www.olx.ro/oferte/user/1wec1a/"
+# Numeric user id paired with every seller listing inside the page's Next.js
+# data blob. Used to filter out sidebar recommendations from other sellers.
+# If OLX changes the id (rare — only on account migration), open SELLER_URL,
+# view source, search for "IST AUTOMOBILE SRL", read the adjacent "id" value.
+SELLER_USER_ID = "1377582040"
+
 UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
     "Chrome/124.0.0.0 Safari/537.36"
+)
+
+# In the seller page's Next.js JSON blob, each listing block looks like:
+#   \"status\":\"active\",...\"url\":\"https:\\u002F\\u002Fwww.olx.ro\\u002F...IDxxx.html\"...\"user\":{\"id\":<seller-id>
+# Match active listings whose url-then-user.id pair belongs to the seller.
+SELLER_LISTING_RE = re.compile(
+    r'\\"status\\":\\"active\\".{0,200}?'
+    r'\\"url\\":\\"(https:\\\\u002F\\\\u002Fwww\.olx\.ro\\\\u002Fd\\\\u002Foferta\\\\u002F[a-zA-Z0-9._-]+ID[a-zA-Z0-9]+\.html)\\"'
+    r'.{0,800}?'
+    r'\\"user\\":\{\\"id\\":' + SELLER_USER_ID,
+    re.DOTALL,
 )
 
 OG_TAG_RE = re.compile(
@@ -62,6 +83,28 @@ def read_urls(path):
             print(f"  ! skipping non-URL line: {line}", file=sys.stderr)
             continue
         urls.append(line)
+    return urls
+
+
+def discover_seller_listings(seller_url):
+    """Fetch the seller page and return every currently-active listing URL.
+    Skips sold/removed listings (status != 'active') and sidebar listings
+    from other users (user.id != SELLER_USER_ID)."""
+    try:
+        html = fetch(seller_url)
+    except (urllib.error.URLError, urllib.error.HTTPError, TimeoutError) as e:
+        print(f"  ! seller-page fetch failed ({e}) — skipping discovery")
+        return []
+    urls = []
+    seen = set()
+    for url in SELLER_LISTING_RE.findall(html):
+        # Inside the page's JSON blob slashes are encoded as \\u002F (literal
+        # two-backslash-then-u002F). Decode back to plain slashes.
+        clean = url.replace("\\\\u002F", "/").replace("\\/", "/")
+        if clean in seen:
+            continue
+        seen.add(clean)
+        urls.append(clean)
     return urls
 
 
@@ -167,10 +210,36 @@ def download_image(img_url, dest):
 
 
 def main():
-    urls = read_urls(LISTINGS_TXT)
+    print(f"Discovering active listings from {SELLER_URL}")
+    discovered = discover_seller_listings(SELLER_URL)
+    print(f"  found {len(discovered)} active listing(s) from seller page")
+
+    # listings.txt remains supported as a manual override / additive list —
+    # useful for one-offs (e.g. testing a URL before it appears on the seller
+    # page, or pinning a specific listing). Discovered URLs come first;
+    # listings.txt URLs are appended without duplicates. Dedup by the IDxxxxx
+    # token rather than the full URL because OLX appends ?reason=... query
+    # params that vary between contexts but point to the same listing.
+    manual = read_urls(LISTINGS_TXT)
+
+    def listing_id(u):
+        m = re.search(r"-ID([a-zA-Z0-9]+)\.html", u)
+        return m.group(1) if m else u
+
+    seen_ids = {listing_id(u) for u in discovered}
+    extra = []
+    for u in manual:
+        lid = listing_id(u)
+        if lid in seen_ids:
+            continue
+        seen_ids.add(lid)
+        extra.append(u)
+    if extra:
+        print(f"  + {len(extra)} extra URL(s) from {LISTINGS_TXT.name}")
+    urls = discovered + extra
+
     if not urls:
-        print(f"No URLs found in {LISTINGS_TXT.name}.")
-        print("Add one OLX listing URL per line, then run this script again.")
+        print("No listings to process.")
         # Still write an empty list so the site falls back gracefully.
         JSON_OUT.parent.mkdir(parents=True, exist_ok=True)
         JSON_OUT.write_text("[]\n", encoding="utf-8")
