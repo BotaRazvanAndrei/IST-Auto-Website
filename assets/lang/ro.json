@@ -53,6 +53,8 @@
     "heading": "Mașini disponibile",
     "disclaimer": "Inventarul este actualizat pe OLX.",
     "noscript": "Activează JavaScript sau vizitează anunțurile noastre pe OLX.",
+    "show_more": "Mai multe",
+    "show_less": "Mai puține",
     "fallback": {
       "heading": "Vezi toate mașinile pe OLX",
       "lede": "Anunțurile active sunt pe OLX. Deschide lista completă într-un tab nou.",

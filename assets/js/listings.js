@@ -49,14 +49,16 @@
     container.appendChild(wrap);
   }
 
+  var INITIAL_VISIBLE = 3;
+
   function renderCards(container, items, sellerUrl, strings) {
     container.innerHTML = '';
     var grid = el('div', { class: 'listings-grid' });
+    var validItems = items.filter(function (i) { return i && i.url && i.title; });
 
-    items.forEach(function (item) {
-      if (!item || !item.url || !item.title) return;
+    validItems.forEach(function (item, idx) {
       var card = el('a', {
-        class: 'listing-card',
+        class: 'listing-card' + (idx >= INITIAL_VISIBLE ? ' listing-card--hidden' : ''),
         href: item.url,
         target: '_blank',
         rel: 'noopener',
@@ -87,18 +89,23 @@
 
     container.appendChild(grid);
 
-    if (sellerUrl && /^https?:\/\//i.test(sellerUrl)) {
-      var t = (strings && strings.fallback) || {};
-      var ctaAll = t.cta || 'Deschide pe OLX';
-      var more = el('p', { class: 'listings-more' });
-      more.appendChild(el('a', {
-        class: 'btn btn--ghost',
-        href: sellerUrl,
-        target: '_blank',
-        rel: 'noopener',
-        text: ctaAll
-      }));
-      container.appendChild(more);
+    if (validItems.length > INITIAL_VISIBLE) {
+      var moreLabel = (strings && strings.show_more) || 'Mai multe';
+      var lessLabel = (strings && strings.show_less) || 'Mai puține';
+      var btn = el('button', {
+        type: 'button',
+        class: 'btn btn--ghost listings-toggle',
+        'aria-expanded': 'false',
+        text: moreLabel
+      });
+      btn.addEventListener('click', function () {
+        var expanded = grid.classList.toggle('listings-grid--expanded');
+        btn.textContent = expanded ? lessLabel : moreLabel;
+        btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
+      var wrap = el('p', { class: 'listings-more' });
+      wrap.appendChild(btn);
+      container.appendChild(wrap);
     }
   }
 
