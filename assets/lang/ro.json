@@ -16,14 +16,12 @@
   "hero": {
     "eyebrow": "Parc auto · Cluj-Napoca",
     "title": "IST Auto",
-    "tagline": "12 luni garanție fără limită de km",
-    "lede": "Rate doar cu buletinul. Numere provizorii incluse. Livrăm oriunde în țară.",
     "cta_whatsapp": "Scrie-ne pe WhatsApp",
     "cta_listings": "Vezi mașinile"
   },
   "about": {
     "heading": "Despre IST Auto",
-    "p1": "IST Auto este un parc auto din Cluj-Napoca specializat în mașini rulate verificate. Oferim garanție 12 luni fără limită de kilometri, rate doar cu buletinul și livrare oriunde în țară.",
+    "p1": "IST Auto este un parc auto din Cluj-Napoca specializat în mașini rulate verificate.",
     "p2": "Fiecare mașină este verificată tehnic înainte de a ajunge la tine. Fără surprize, fără clauze ascunse — o experiență directă, bazată pe încredere."
   },
   "services": {
@@ -51,7 +49,6 @@
   },
   "listings": {
     "heading": "Mașini disponibile",
-    "disclaimer": "Inventarul este actualizat pe OLX.",
     "noscript": "Activează JavaScript sau vizitează anunțurile noastre pe OLX.",
     "show_more": "Mai multe",
     "show_less": "Mai puține",
@@ -75,7 +72,7 @@
   },
   "footer": {
     "copyright": "© IST Auto",
-    "inventory_note": "Informațiile despre mașini sunt gestionate pe OLX."
+    "built_by": "Site realizat de"
   },
   "whatsapp": {
     "prefilled_message": "Bună, am văzut site-ul IST Auto și vreau mai multe detalii despre mașini."

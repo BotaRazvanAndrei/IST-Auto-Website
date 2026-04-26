@@ -220,7 +220,7 @@ a { color: inherit; }
 .hero__inner {
   max-width: var(--container);
   margin: 0 auto;
-  padding: 4rem 1.25rem 3.5rem;
+  padding: 5rem 1.25rem 4.5rem;
 }
 .eyebrow {
   font-family: var(--f-head);
@@ -236,28 +236,13 @@ a { color: inherit; }
   font-weight: 700;
   font-size: 2.25rem;
   line-height: 1.1;
-  margin: 0 0 0.75rem;
-}
-.hero__tagline {
-  font-family: var(--f-head);
-  font-weight: 700;
-  font-size: 1.5rem;
-  line-height: 1.2;
-  margin: 0 0 1rem;
-  color: var(--c-white);
-}
-.hero__lede {
-  color: var(--c-muted-on-dark);
-  font-size: 1.0625rem;
-  max-width: 52ch;
   margin: 0 0 1.75rem;
 }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
 
 @media (min-width: 768px) {
-  .hero__inner { padding: 6rem 1.25rem 5rem; }
+  .hero__inner { padding: 7.5rem 1.25rem 6.5rem; }
   .hero__title { font-size: 3.5rem; }
-  .hero__tagline { font-size: 2rem; }
 }
 
 /* ---------- Sections ---------- */
@@ -275,6 +260,8 @@ a { color: inherit; }
   margin: 0 0 1.25rem;
 }
 .section__lede { color: var(--c-text-muted); margin: 0 0 1.5rem; }
+
+#listings .section__heading { margin-bottom: 3rem; }
 
 @media (min-width: 768px) {
   .section { padding: 5rem 0; }
