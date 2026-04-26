@@ -19,6 +19,33 @@ Format for each entry:
 
 ---
 
+## 2026-04-25 (later) — Auto-discovery, GitHub Action, "Mai multe" toggle, repo on GitHub
+
+**Done:**
+
+- **Created [../.gitignore](../.gitignore)** covering macOS / Windows / editors / Python / logs / secrets / Node. Deliberately **not** ignored: `Memory/`, `Materials/`, `assets/data/listings.json`, `assets/img/listings/*.jpg`, `listings.txt` — Pages serves the data files, and the future Action commits updates back.
+- **Pushed the repo to GitHub** and enabled GitHub Pages. Owner has a `work` branch for testing alongside `main`.
+- **Created [../.github/workflows/update-listings.yml](../.github/workflows/update-listings.yml)** — scheduled GitHub Action that runs `add-listings.py` daily at **04:17 UTC** (off-the-hour to avoid GitHub's hourly cron congestion), on push to `main` when `listings.txt` / `add-listings.py` / the workflow itself changes, and on manual dispatch. Auto-commits any diff in `assets/data/listings.json` or `assets/img/listings/` back to the running branch with `[skip ci]` to prevent re-trigger loops. `concurrency: update-listings` group prevents overlap. `permissions: contents: write` in the YAML, plus the repo-level "Read and write permissions" toggle in Settings → Actions, are both required for the auto-commit step.
+- **Auto-discovery in [../add-listings.py](../add-listings.py)** — script now scrapes [https://www.olx.ro/oferte/user/1wec1a/](https://www.olx.ro/oferte/user/1wec1a/) on every run and finds **all currently-active seller listings** without any human input. Pulled 7 active listings on first run (Hyundai Tucson, Audi A6, VW Sharan, Audi A5, Audi A4, Nissan Qashqai, Suzuki Grand Vitara). Implementation: regex against the embedded Next.js JSON blob — pairs `"status":"active"` + `"url":"..."` + `"user":{"id":1377582040}` so sidebar recommendations from other sellers are filtered out. Sold listings (status `removed_by_user` / `outdated`) are skipped automatically. **`listings.txt` is now optional** — kept as a manual override / additive list (one-offs, off-OLX listings, recovery if regex breaks). Dedup is by extracted `IDxxxxx` token, not full URL, because OLX appends `?reason=seller_listing` query strings inconsistently.
+- **3-card cap with toggle** — [../assets/js/listings.js](../assets/js/listings.js) now hides cards past index 2 with `.listing-card--hidden` and a `<button class="listings-toggle">` that flips `.listings-grid--expanded` on the grid. Replaced the seller-page CTA below the grid (`Deschide pe OLX`) with this toggle. Added `listings.show_more` / `listings.show_less` keys to [../assets/lang/ro.json](../assets/lang/ro.json) ("Mai multe" / "Mai puține") and [../assets/lang/en.json](../assets/lang/en.json) ("Show more" / "Show less"). CSS additions in [../assets/css/styles.css](../assets/css/styles.css): `.listing-card--hidden { display: none; }` and `.listings-grid--expanded .listing-card--hidden { display: flex; }` to match the card's existing flex layout.
+- **Verified end-to-end locally** — `python3 add-listings.py` discovered 7 active listings, downloaded photos, wrote `listings.json`. `localhost:8000` served the fresh data; cards render with the toggle visible.
+
+**Important context for next session — old "OLX seller page has no listings" note was wrong.** The previous progress entry stated: *"OLX hydrates listings via XHR (the seller-page SSR HTML contains zero of the seller's actual ads)"*. Re-probing the page today found the listings **are** in the SSR HTML — embedded inside the Next.js JSON blob with double-escaped slashes (`\\u002F`). The old conclusion was wrong (or OLX changed). Lesson logged in [07-mistakes-and-lessons.md](07-mistakes-and-lessons.md).
+
+**Not done / deferred:**
+
+- The GitHub Action hasn't been verified on the cloud yet — we worked locally on `work` branch. To trigger the manual dispatch button on github.com, the workflow file has to exist on the **default branch** (`main`); once it does, the dropdown lets you dispatch any branch.
+- DNS / custom domain (`istautobavaria.ro` → GitHub Pages) not configured.
+- 2 unused placeholder photos linger in [../assets/img/listings/](../assets/img/listings/) — `demo-1.jpg`, `demo-2.jpg`. Harmless (not referenced by `listings.json`), but worth cleaning up.
+
+**Next session should:**
+
+- Merge the workflow file to `main` so the **Run workflow** button appears in the Actions tab.
+- Run a manual dispatch on `main` to confirm the cloud run produces the same output as local. Watch for: (a) any cron cache-permission issues; (b) the auto-commit step actually pushing.
+- Resume Phase E — custom domain, DNS, Search Console, Business Profile.
+
+---
+
 ## 2026-04-25 — Listings: WhatsApp-preview-style cards driven by a paste-link script
 
 **Done:**

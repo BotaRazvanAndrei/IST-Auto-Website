@@ -16,14 +16,12 @@
   "hero": {
     "eyebrow": "Used-car dealership · Cluj-Napoca",
     "title": "IST Auto",
-    "tagline": "12-month warranty, no km limit",
-    "lede": "ID-only financing. Temporary plates included. We deliver anywhere in Romania.",
     "cta_whatsapp": "Text us on WhatsApp",
     "cta_listings": "See our cars"
   },
   "about": {
     "heading": "About IST Auto",
-    "p1": "IST Auto is a used-car dealership in Cluj-Napoca, Romania. Every car comes with a 12-month warranty with no km limit, ID-only financing, and nationwide delivery.",
+    "p1": "IST Auto is a used-car dealership in Cluj-Napoca, Romania.",
     "p2": "Each car is inspected before it reaches you. No surprises, no hidden clauses — a straightforward experience built on trust."
   },
   "services": {
@@ -51,7 +49,6 @@
   },
   "listings": {
     "heading": "Available cars",
-    "disclaimer": "Inventory is maintained on OLX.",
     "noscript": "Enable JavaScript or visit our listings on OLX.",
     "show_more": "Show more",
     "show_less": "Show less",
@@ -75,7 +72,7 @@
   },
   "footer": {
     "copyright": "© IST Auto",
-    "inventory_note": "Car inventory is maintained on OLX."
+    "built_by": "Site built by"
   },
   "whatsapp": {
     "prefilled_message": "Hi, I found IST Auto's site and I'd like more info about your cars."

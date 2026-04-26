@@ -8,32 +8,34 @@ Update this file at the end of every session: remove completed items, re-priorit
 
 ## Ready to work on (no blockers)
 
-### Visual check the new listings cards (5 min, do before anything else)
+### Verify the GitHub Action on the cloud
 
-Server should already be running on `http://localhost:8000/` (or run `python3 -m http.server 8000` from repo root). Scroll to the **Mașini disponibile** section and confirm:
+Repo is on GitHub. Pages is enabled. The auto-sync workflow lives at [../.github/workflows/update-listings.yml](../.github/workflows/update-listings.yml). Owner is testing on a `work` branch alongside `main`.
 
-1. Two demo cards render in a grid (1 col mobile / 2 tablet / 3 desktop). Photo on top (16:10 aspect), bold title, description line below, `olx.ro` in lowercase at the bottom.
-2. Hover lifts the card 2px and turns the border red — should feel "clickable like a WhatsApp link preview".
-3. Click → opens the OLX seller page in a new tab.
-4. RO/EN toggle re-renders the "see all on OLX" CTA below the grid (cards themselves stay — they don't use i18n).
-5. Compare against [../Materials/Screenshot 2026-04-23 at 12.01.25.png](../Materials/Screenshot%202026-04-23%20at%2012.01.25.png). If spacing/typography drifts noticeably from that WhatsApp preview look, tune `.listing-card` in [../assets/css/styles.css](../assets/css/styles.css).
+To unlock the **Run workflow** button on github.com → Actions → **Update listings**:
 
-If broken, log it in [07-mistakes-and-lessons.md](07-mistakes-and-lessons.md).
+1. The workflow file must exist on the **default branch** (`main`). GitHub only renders the manual-dispatch dropdown for workflows that are present on the default branch. If you've been iterating on `work`, merge the workflow file into `main` once.
+2. Confirm repo **Settings → Actions → General → Workflow permissions** is set to **"Read and write permissions"** (otherwise the auto-commit step fails silently).
+3. Trigger a manual dispatch from `main`. Watch the run. The three steps to confirm: `Set up Python`, `Run add-listings.py` (should print 7 ok lines), `Commit changes (if any)` (prints `No listing changes to commit.` if state is already current — that's success).
+4. If the auto-commit step fails with `Permission denied to push`, re-check step 2.
 
-### Replace the demo entries with real OLX listings
+After this, the daily cron at 04:17 UTC takes over. Verify it once by checking the next morning that a run appears in the Actions history.
 
-Once the owner provides one or more real OLX listing URLs (single-listing pages like `https://www.olx.ro/d/oferta/...`, **not** the seller page):
+### Phase E — custom domain + Google presence
 
-1. Edit [../listings.txt](../listings.txt) — add one URL per line, delete the example comments.
-2. Run `python3 add-listings.py` from the repo root.
-3. Script fetches each page's Open Graph tags + image, writes [../assets/data/listings.json](../assets/data/listings.json), downloads photos into [../assets/img/listings/](../assets/img/listings/).
-4. Refresh the site — real cards replace the demo ones.
+1. **`CNAME` file** at repo root containing `istautobavaria.ro`. Configure DNS per [GitHub Pages docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) — `A` records to GitHub's IPs (`185.199.108.153` etc.) + `CNAME` for `www` (or apex-only if preferred). Enable "Enforce HTTPS" once the cert provisions (can take 15–60 min).
+2. **Verify the site at `https://istautobavaria.ro/`** — loads, favicon shows, fonts load, WhatsApp CTA works, listings cards render with the **Mai multe** toggle.
+3. **Google Search Console**: verify ownership (DNS TXT preferred, HTML file backup). Submit `sitemap.xml`. Request indexing of `/`.
+4. **Validate structured data**:
+   - JSON-LD at https://validator.schema.org/ — expect zero errors once `TODO_*` are filled. Meanwhile, expect warnings for missing postal code / geo / hours.
+   - Rich results at https://search.google.com/test/rich-results.
+5. **Google Business Profile**: create for `IST Auto, Strada Corneliu Coposu 167, Cluj-Napoca`. Verification is usually by postcard and takes days. Once verified, link the site URL in the profile and add the profile URL to the JSON-LD `sameAs` array.
+6. **Lighthouse**: run in Chrome DevTools on the production URL. Target ≥ 90 Performance / Accessibility / Best Practices, ≥ 95 SEO.
+7. **Social debuggers**: Facebook (https://developers.facebook.com/tools/debug/) and Twitter card validator — scrape the URL so caches pick up the real `og.jpg`.
 
-If a URL 404s (OLX rotates sold listings frequently), the script logs and skips. Run again once the owner gives a fresh URL.
+### Verify the rest of Phase C + D in a browser (cheap, do before deep-link debugging)
 
-### Verify the rest of Phase C + D in a browser (do before Phase E)
-
-1. **i18n**: RO/EN toggle swaps **every** visible string, including `<title>` and `<meta description>` (inspect `<head>` after toggle). `<html lang>` updates to `ro` / `en`. Choice persists across refresh via `localStorage`.
+1. **i18n**: RO/EN toggle swaps **every** visible string, including `<title>` and `<meta description>` (inspect `<head>` after toggle). `<html lang>` updates to `ro` / `en`. Choice persists across refresh via `localStorage`. The listings toggle button label flips between `Mai multe` ↔ `Show more` (and `Mai puține` ↔ `Show less` when expanded).
 2. **WhatsApp CTA**: `href` picks up the active-language prefilled message. Click on desktop → should deep-link to WhatsApp Web.
 3. **Mobile hamburger** (≤767px): opens/closes the menu; `aria-expanded` flips.
 4. **Diacritics**: `mașină`, `garanție`, `Sâmbătă` render without boxes or `?`.
@@ -41,30 +43,20 @@ If a URL 404s (OLX rotates sold listings frequently), the script logs and skips.
 6. **OG preview**: once live, paste the URL into https://metatags.io/ and confirm `og.jpg` renders correctly with the RO title + description.
 7. No JS errors in the browser console.
 
-### Phase E — launch + Google presence
+### Watch the auto-sync after first cron fire
 
-1. **Push to GitHub** — create repo `istauto-site` (or similar) under the owner's account, push `main`.
-2. **Enable GitHub Pages** on `main` branch, root folder. Confirm the default `*.github.io` URL serves the site.
-3. **`CNAME` file** at repo root containing `istautobavaria.ro`. Configure DNS per [GitHub Pages docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site) — `A` records to GitHub's IPs + `CNAME` for `www` (or apex-only if preferred). Enable "Enforce HTTPS" once the cert provisions.
-4. **Verify the site at `https://istautobavaria.ro/`** — loads, favicon shows, fonts load, WhatsApp CTA works, OLX fallback renders.
-5. **Google Search Console**: verify ownership (DNS TXT preferred, HTML file backup). Submit `sitemap.xml`. Request indexing of `/`.
-6. **Validate structured data**:
-   - JSON-LD at https://validator.schema.org/ — expect zero errors once `TODO_*` are filled. Meanwhile, expect warnings for missing postal code / geo / hours.
-   - Rich results at https://search.google.com/test/rich-results.
-7. **Google Business Profile**: create for `IST Auto, Strada Corneliu Coposu 167, Cluj-Napoca`. Verification is usually by postcard and takes days. Once verified, link the site URL in the profile and add the profile URL to the JSON-LD `sameAs` array.
-8. **Lighthouse**: run in Chrome DevTools on the production URL. Target ≥ 90 Performance / Accessibility / Best Practices, ≥ 95 SEO.
-9. **Social debuggers**: Facebook (https://developers.facebook.com/tools/debug/) and Twitter card validator — scrape the URL so caches pick up the real `og.jpg`.
+After the first scheduled run (next day at 04:17 UTC):
 
-### Phase E.5 — Listings auto-sync via GitHub Action (after Pages is live)
+1. Confirm a new run appears in the Actions history without manual help.
+2. If `listings.json` changed (a car was added/sold/repriced on OLX), confirm the `[skip ci]` commit appears on `main` and that GitHub Pages redeployed.
+3. If listings changed but no commit appeared → check the run logs for `Permission denied to push` (re-fix step 2 above) or for the regex returning 0 matches (OLX may have redesigned the seller page — see fallback note below).
 
-Once the site is on GitHub Pages, replace the local `add-listings.py` workflow with a scheduled GitHub Action so the owner doesn't need a developer to add cars.
+**Failure mode to watch for:** if OLX redesigns the seller page, `discover_seller_listings()` may return `[]` and the workflow will commit an empty `listings.json`, replacing all real cards with the empty-state fallback. Mitigation queued: add a step that fails the workflow when discovery returns 0 listings AND `listings.txt` is also empty, so the failure is visible. Until then, eyeball the live site weekly during the first month.
 
-Two possible implementations:
+### Maintenance / housekeeping
 
-- **Manual-paste mode** (simpler, ships first): owner edits `listings.txt` via GitHub's web UI → commit triggers Action → Action runs the existing `add-listings.py` → commits the resulting `listings.json` + downloaded photos back to `main`. Pages auto-redeploys. Owner does: open repo on github.com, paste URL, click commit. ~30s round-trip.
-- **Auto-discovery mode** (later, owner-zero-effort): scheduled Action runs every 6h, hits OLX's hydration API or scrapes the seller page (`olx.ro/oferte/user/1wec1a/`), discovers all current listings, fetches each one's OG tags. Owner does **nothing** — keeps using OLX as before. Caveat: depends on OLX HTML structure; ~10-min fix when OLX redesigns. Add a workflow-failure notification so we know quickly.
-
-Both modes write the same `listings.json` shape — the rendering layer is unchanged. Build manual-paste first, then auto-discovery once the discovery scraper is reliable.
+- Delete the unused [../assets/img/listings/demo-1.jpg](../assets/img/listings/demo-1.jpg) and `demo-2.jpg` (no longer referenced by `listings.json`). Harmless but adds noise to git diffs.
+- Decide whether `listings.txt` should be blanked to comments-only (it's now an optional manual override; the file isn't required for the auto-discovery flow).
 
 ### Phase F — skill extraction (after launch)
 
@@ -73,8 +65,10 @@ Only after the site is live and [07-mistakes-and-lessons.md](07-mistakes-and-les
 - `brand-website-bootstrap` — scaffolds `CLAUDE.md` + `Memory/` + file structure for a new brand site. **Must include** the "ask for existing materials even if owner says they have no brand" question up front (lesson from this project).
 - `bilingual-static-site` — `data-i18n` + JSON pattern, language persistence, `<html lang>` swap, hreflang meta.
 - `local-business-seo` — meta tags + JSON-LD `LocalBusiness`/`AutoDealer` + sitemap + robots + Search Console + Google Business Profile checklist.
-- `olx-embed-with-fallback` — iframe-with-load-timeout pattern (generalizes to any site that blocks embedding — not just OLX).
+- `marketplace-listings-sync` — paste-link script + auto-discovery from a seller page's Next.js JSON blob + GitHub Action on a daily cron. Generalizes to any marketplace whose listing page exposes OG meta + JSON-LD. The right pattern is regex-against-SSR, not headless-browser. **Must include** the "re-probe before trusting old notes about external HTML" lesson.
 - `favicon-and-og-from-svg` — the Chrome-headless-renders-SVG-at-exact-dimensions pattern, since `qlmanage` and `sips -z` alone corrupted the aspect ratio. Cheap, zero-dependency, reproducible.
+
+Note: the originally-planned `olx-embed-with-fallback` skill is **dead** — the iframe path was abandoned because OLX hydrates listings client-side. Don't extract it.
 
 Don't extract a skill for a pattern that didn't prove itself under real conditions.
 
@@ -103,4 +97,4 @@ Phase E can ship with the current `TODO_*` placeholders — the site will still 
 
 ## How to prioritize
 
-Pick the topmost item in "Ready to work on". The browser-verification checklist is cheap and should happen before pushing to GitHub. Phase E's first blockers are **owner-side** (GitHub account access, DNS control, Google account for Search Console + Business Profile) — loop the owner in before starting.
+Pick the topmost item in "Ready to work on". The cloud-verification of the GitHub Action comes first — the auto-sync is the highest-leverage piece of infrastructure on this project, and verifying it on the cloud (vs. just locally) is gating Phase E launch confidence. After that, the custom domain + Google indexing is mostly owner-side coordination (DNS control, Google account access).

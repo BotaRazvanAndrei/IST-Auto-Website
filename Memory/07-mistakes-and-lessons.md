@@ -82,3 +82,21 @@ If we swap `<title>` / `<meta description>` on language change via JS, Google st
 ### Assuming owner's service list
 
 We don't actually know what services IST Auto offers. The default list in [02-client-data.md](02-client-data.md) is a guess. Do not ship with the guess unchallenged — confirm with the owner, or label the section clearly as "TODO: confirm".
+
+---
+
+## 2026-04-25 — Trusted a stale "OLX seller page is empty" note instead of re-probing
+
+**What happened:** The previous session's progress log stated, with apparent certainty, that the OLX seller page's SSR HTML *"contains zero of the seller's actual ads — only sidebar recommendations cycled across categories"*, and that listings were XHR-hydrated only. I had used that note to scope the seller-page-discovery work as a deferred Phase E.5 problem requiring either OLX's hydration API or a headless browser. When the user actually asked for auto-discovery, I almost wrote the deferred-feature speech again — but instead I re-ran a probe today and found the seller's listings **are** in the SSR HTML, embedded inside a Next.js JSON blob (paired with `"status":"active"` and `"user":{"id":<seller-id>}`). The "deferred" feature turned out to be a one-regex job. Confirmation here would have wasted hours arguing for an unnecessarily complex implementation.
+**Why it happened:** I treated a memory note like a fact rather than like a frozen-in-time observation of an external system. OLX's HTML may have changed between sessions, or the previous session's investigation was simply incomplete (the listings were there but harder to spot inside a 3MB JSON blob).
+**Fix:** Re-probed the seller page. Built the regex against the actual current HTML. Auto-discovery now works for all 7 active listings.
+**How to avoid next time:** When a memory note describes an external system (third-party HTML, API behavior, network response shape), **re-verify before scoping work around it**. The CLAUDE.md memory rule already says this — *"If a recalled memory conflicts with current information, trust what you observe now"* — but it's easier to skim past than to act on. Specifically: if a memory says "X doesn't work" and the user is asking for a feature that depends on X, take 2 minutes to fetch X yourself before dismissing the request.
+
+---
+
+## 2026-04-25 — Two wrong cleanup attempts on JSON-blob slash escapes
+
+**What happened:** While extracting URLs from the Next.js JSON blob in the OLX seller page, the regex matched 7 listings cleanly but the captured URLs printed as `https://www.olx.ro/...` — broken hrefs. First fix attempt: `url.replace("\\u002F", "/")` (in source — Python string `/` = the single character `/`). Did nothing. Second fix attempt: `url.replace("\\/", "/")` (single-backslash + slash). Also did nothing. Only on the third try, after using `repr()` to inspect the actual bytes, did I see the captured string contained a literal `\\u002F` (two backslashes + the five chars `u002F`). The right cleanup was `url.replace("\\\\u002F", "/")` in source.
+**Why it happened:** I conflated three different layers of escaping: (1) Python string literal escapes (`"\\u002F"` → 6 chars `/`; `"/"` → 1 char `/`), (2) regex pattern escapes (`\\` matches one backslash), (3) the JSON-encoded-inside-JSON double-escaping in the actual page source (one `/` becomes `\\u002F`, six characters). The display of `\\\\u002F` inside `repr()` output looked similar enough to the raw page bytes that I guessed at the cleanup instead of measuring.
+**Fix:** Used `repr(captured_url)` to print the exact byte sequence, then chose the literal `\\\\u002F` (4 backslashes in Python source = 2 actual backslashes in the string) for the `.replace()` call. Verified with a one-off test before re-running the script.
+**How to avoid next time:** When a string contains backslashes and a `replace()` looks like a no-op, **always print `repr()` first**. Don't guess the escape level — measure it. Save 5 minutes of guesswork by spending 30 seconds on `print(repr(value))`.

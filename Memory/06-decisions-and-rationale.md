@@ -83,3 +83,35 @@ Format:
 **Decision:** Every session must read [00-index.md](00-index.md) first and must end by updating [05-progress-log.md](05-progress-log.md), and [07-mistakes-and-lessons.md](07-mistakes-and-lessons.md) / [08-next-steps.md](08-next-steps.md) when applicable.
 **Why:** The entire purpose of this project is to stop running in circles. Without write-back, the memory system rots.
 **Consequences:** Sessions that skip this step have failed to do the work, regardless of whether code was written.
+
+---
+
+## 2026-04-25 — Listings auto-discovery + GitHub Action automation
+
+### Auto-discover listings from the seller page; `listings.txt` becomes optional
+
+**Decision:** [../add-listings.py](../add-listings.py) scrapes the OLX seller page on every run and finds active listings by regex against the embedded Next.js JSON blob (pairing `"status":"active"` + `"url":"..."` + `"user":{"id":<seller-id>}`). The `listings.txt` file is still read but is now an optional manual override / additive list, not the primary source.
+**Why:** Owner-zero-effort was the original product goal. Manual paste-link mode worked but required the owner to copy URLs into a text file — the seller page already has all the data, so we should read it directly. Verified the 7 currently-active listings appear in the SSR HTML (contradicting an earlier note that claimed they were XHR-hydrated only).
+**Alternatives considered:** (a) Hit OLX's hydration JSON API directly — rejected: undocumented, more brittle to redesigns, requires reverse-engineering. (b) Pure manual-paste mode — rejected: owner has to remember to update `listings.txt`. (c) Scrape after a headless browser render (Playwright / Selenium) — rejected: needs a browser binary in the GitHub Action, way more weight than a regex against existing SSR HTML.
+**Consequences:** When OLX redesigns the seller page, the regex breaks silently (the workflow would commit `[]` and the site would show the empty-state fallback). Mitigation queued: workflow-failure notification (Slack/email) and weekly visual check during the first month.
+
+### Hardcode `SELLER_USER_ID` in `add-listings.py`
+
+**Decision:** The seller's numeric user id (`1377582040`) is a constant at the top of the script with a comment explaining how to recover it if it ever changes.
+**Why:** Self-documenting and trivial to maintain. Deriving it dynamically from the page would add complexity for no real benefit — IST Auto's user id only changes on account migration, which is a once-in-many-years event.
+**Alternatives considered:** Find the modal `user.id` value across all listings (most-frequent value is the seller). Works but adds a parsing step. Not worth it.
+**Consequences:** If OLX migrates accounts, one-line code change, redeploy.
+
+### GitHub Action: daily cron at 04:17 UTC, push trigger on `listings.txt`, manual dispatch
+
+**Decision:** [../.github/workflows/update-listings.yml](../.github/workflows/update-listings.yml) runs the script on three triggers — schedule (`cron: "17 4 * * *"`), `push` to `listings.txt` / `add-listings.py` / the workflow file itself, and `workflow_dispatch`. Auto-commits any diff back to the running branch with `[skip ci]` to prevent re-trigger loops. `permissions: contents: write` plus repo Settings → Actions → "Read and write permissions" enable the auto-commit step.
+**Why:** Daily refresh keeps the site current without owner involvement. Push trigger gives instant updates if someone edits `listings.txt` via github.com (manual override path). Manual dispatch is for ad-hoc refresh (and for early testing before the cron fires). 04:17 UTC is **off-the-hour** because GitHub's scheduled-workflow infrastructure congests on the hour, often delaying jobs by 15–30 minutes.
+**Alternatives considered:** Run every 6h or 12h — rejected as overkill for a small dealership where listings change weekly. Run only on push — rejected because it relies on someone editing `listings.txt`, defeating auto-discovery.
+**Consequences:** Workflows pause if the repo is inactive for 60 days; a single commit re-arms them. Document this in any handoff if the dealership has long quiet periods.
+
+### Show 3 cards initially, "Mai multe" toggle reveals the rest
+
+**Decision:** [../assets/js/listings.js](../assets/js/listings.js) renders all listings but adds `.listing-card--hidden` to cards past index 2. A button below the grid toggles `.listings-grid--expanded` on the grid container. The toggle replaces the previous seller-page CTA (`Deschide pe OLX`) under the grid.
+**Why:** With 7+ listings the grid ran tall enough to dominate the page, pushing the contact section below the fold on smaller screens. 3 cards comfortably fits desktop's 3-column row and shows enough variety on mobile. The toggle keeps the rest accessible without the page-length cost.
+**Alternatives considered:** (a) Pagination — rejected: overkill for ≤20 cars. (b) Always show 6, hide rest — rejected: 3 maps cleanly to the desktop grid (one full row). (c) Lazy-load with infinite scroll — rejected: massive complexity for negligible UX gain.
+**Consequences:** If the dealership ever scales past ~20 active listings, revisit and add pagination. Below 20, the toggle is fine.
