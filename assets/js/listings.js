@@ -102,6 +102,10 @@
         var expanded = grid.classList.toggle('listings-grid--expanded');
         btn.textContent = expanded ? lessLabel : moreLabel;
         btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+        if (!expanded) {
+          var section = document.getElementById('listings');
+          if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
       var wrap = el('p', { class: 'listings-more' });
       wrap.appendChild(btn);
