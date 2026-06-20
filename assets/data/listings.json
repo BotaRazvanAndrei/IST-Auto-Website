@@ -1,29 +1,5 @@
 [
   {
-    "title": "Audi A5 3xS-Line 2018 2.0Diesel 190cp Automat • Transport Gratuit la domiciliu • Numere rosii • Revizie Gratuita Cluj-Napoca",
-    "description": "19 499 € · Cluj-Napoca",
-    "photo": "assets/img/listings/audi-a5-3xs-line-2018-2-0diesel-190cp-automat-transport-gratuit-la-domiciliu-num.jpg",
-    "url": "https://www.olx.ro/d/oferta/audi-a5-3xs-line-2018-2-0diesel-190cp-automat-transport-gratuit-la-domiciliu-numere-rosii-revizie-gratuita-IDkGeT8.html"
-  },
-  {
-    "title": "Audi A4 3xS-Line 2013 2.0Diesel 177Cp Euro 5 • RAR EFECTUAT • 12Luni Garantie Motor Cutie • Rate • Transport gratuit la domiciliu Cluj-Napoca",
-    "description": "9 899 € · Cluj-Napoca",
-    "photo": "assets/img/listings/audi-a4-3xs-line-2013-2-0diesel-177cp-euro-5-rar-efectuat-12luni-garantie-motor-.jpg",
-    "url": "https://www.olx.ro/d/oferta/audi-a4-3xs-line-2013-2-0diesel-177cp-euro-5-rar-efectuat-12luni-garantie-motor-cutie-rate-transport-gratuit-la-domiciliu-IDkBoIv.html"
-  },
-  {
-    "title": "Skoda Superb Exclusiv 2012 2.0Diesel 170cp Euro 5 • 12Luni Garantie Motor Cutie • Transport gratuit la domiciliu •Rate Doar cu buletinul• RAR EFECTUAT Cluj-Napoca",
-    "description": "7 499 € · Cluj-Napoca",
-    "photo": "assets/img/listings/skoda-superb-exclusiv-2012-2-0diesel-170cp-euro-5-12luni-garantie-motor-cutie-tr.jpg",
-    "url": "https://www.olx.ro/d/oferta/skoda-superb-exclusiv-2012-2-0diesel-170cp-euro-5-12luni-garantie-motor-cutie-transport-gratuit-la-domiciliu-rate-doar-cu-buletinul-rar-efectuat-IDkBoDa.html"
-  },
-  {
-    "title": "Skoda Octavia VRS 2013 2.0Diesel 170cp Automat DSG • RAR EFECTUAT • 12Luni Garantie Motor cutie • Transport gratuit la domiciliu • Rate Cluj-Napoca",
-    "description": "7 499 € · Cluj-Napoca",
-    "photo": "assets/img/listings/skoda-octavia-vrs-2013-2-0diesel-170cp-automat-dsg-rar-efectuat-12luni-garantie-.jpg",
-    "url": "https://www.olx.ro/d/oferta/skoda-octavia-vrs-2013-2-0diesel-170cp-automat-dsg-rar-efectuat-12luni-garantie-motor-cutie-transport-gratuit-la-domiciliu-rate-IDkCPlb.html"
-  },
-  {
     "title": "Audi A4 Allroad 2015 2.0Diesel Euro6 • 12Luni Garantie Motor cutie si 4x4 • Numere rosii • Transport la domiciliu • Revizie Ulei / Distributie Cadou Cluj-Napoca",
     "description": "11 899 € · Cluj-Napoca",
     "photo": "assets/img/listings/audi-a4-allroad-2015-2-0diesel-euro6-12luni-garantie-motor-cutie-si-4x4-numere-r.jpg",
@@ -36,21 +12,27 @@
     "url": "https://www.olx.ro/d/oferta/volkswagen-passat-highline-2012-automat-2-0diesel-170cp-12luni-garantie-motor-cutie-revizie-gratuita-transport-la-domicliu-IDkFKPc.html"
   },
   {
-    "title": "Audi A5 Coupe 3xS-Line Quattro ABT 2.0Diesel 170cp SOFT ABT • 12Luni Garantie Motor cutie • Transport Gratuit la domiciliu • Rate • Revizie gratuita Cluj-Napoca",
-    "description": "8 999 € · Cluj-Napoca",
-    "photo": "assets/img/listings/audi-a5-coupe-3xs-line-quattro-abt-2-0diesel-170cp-soft-abt-12luni-garantie-moto.jpg",
-    "url": "https://www.olx.ro/d/oferta/audi-a5-coupe-3xs-line-quattro-abt-2-0diesel-170cp-soft-abt-12luni-garantie-motor-cutie-transport-gratuit-la-domiciliu-rate-revizie-gratuita-IDkDaBY.html"
-  },
-  {
-    "title": "Audi A5 3xS-Line 2011 2.0Diesel 170cp • 12Luni Garantie Motor Cutie • Transport gratuit la domiciliu • Revizie ulei/distributie gratuita Cluj-Napoca",
-    "description": "9 499 € · Cluj-Napoca",
-    "photo": "assets/img/listings/audi-a5-3xs-line-2011-2-0diesel-170cp-12luni-garantie-motor-cutie-transport-grat.jpg",
-    "url": "https://www.olx.ro/d/oferta/audi-a5-3xs-line-2011-2-0diesel-170cp-12luni-garantie-motor-cutie-transport-gratuit-la-domiciliu-revizie-ulei-distributie-gratuita-IDkDavd.html"
+    "title": "Audi A5 3xS-Line 2018 2.0Diesel 190cp Automat • Transport Gratuit la domiciliu • Numere rosii • Revizie Gratuita Cluj-Napoca",
+    "description": "19 499 € · Cluj-Napoca",
+    "photo": "assets/img/listings/audi-a5-3xs-line-2018-2-0diesel-190cp-automat-transport-gratuit-la-domiciliu-num.jpg",
+    "url": "https://www.olx.ro/d/oferta/audi-a5-3xs-line-2018-2-0diesel-190cp-automat-transport-gratuit-la-domiciliu-numere-rosii-revizie-gratuita-IDkGeT8.html"
   },
   {
     "title": "Audi A4 3xS-Line 2014 2.0Diesel 177cp Automat S-Tronic • 12Luni Garantie Motor Cutie • Revizie Gratuita Ulei Distributie • Transport gratuit • Rate Cluj-Napoca",
     "description": "11 999 € · Cluj-Napoca",
     "photo": "assets/img/listings/audi-a4-3xs-line-2014-2-0diesel-177cp-automat-s-tronic-12luni-garantie-motor-cut.jpg",
     "url": "https://www.olx.ro/d/oferta/audi-a4-3xs-line-2014-2-0diesel-177cp-automat-s-tronic-12luni-garantie-motor-cutie-revizie-gratuita-ulei-distributie-transport-gratuit-rate-IDkBO6w.html"
+  },
+  {
+    "title": "Audi A4 3xS-Line 2013 2.0Diesel 177Cp Euro 5 • RAR EFECTUAT • 12Luni Garantie Motor Cutie • Rate • Transport gratuit la domiciliu Cluj-Napoca",
+    "description": "9 899 € · Cluj-Napoca",
+    "photo": "assets/img/listings/audi-a4-3xs-line-2013-2-0diesel-177cp-euro-5-rar-efectuat-12luni-garantie-motor-.jpg",
+    "url": "https://www.olx.ro/d/oferta/audi-a4-3xs-line-2013-2-0diesel-177cp-euro-5-rar-efectuat-12luni-garantie-motor-cutie-rate-transport-gratuit-la-domiciliu-IDkBoIv.html"
+  },
+  {
+    "title": "Skoda Superb Exclusiv 2012 2.0Diesel 170cp Euro 5 • 12Luni Garantie Motor Cutie • Transport gratuit la domiciliu •Rate Doar cu buletinul• RAR EFECTUAT Cluj-Napoca",
+    "description": "7 199 € · Cluj-Napoca",
+    "photo": "assets/img/listings/skoda-superb-exclusiv-2012-2-0diesel-170cp-euro-5-12luni-garantie-motor-cutie-tr.jpg",
+    "url": "https://www.olx.ro/d/oferta/skoda-superb-exclusiv-2012-2-0diesel-170cp-euro-5-12luni-garantie-motor-cutie-transport-gratuit-la-domiciliu-rate-doar-cu-buletinul-rar-efectuat-IDkBoDa.html"
   }
 ]
